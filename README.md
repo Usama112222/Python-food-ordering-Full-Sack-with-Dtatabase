@@ -6,7 +6,6 @@ A full-stack **Food Ordering Web Application** built using **Flask**, featuring 
 The system supports both **users and admins**, allowing customers to place and manage orders while admins can view, update, and delete all orders.
 
 ---
-
 ## 🖥️ Screenshots
 
 ### Home Page
@@ -29,22 +28,6 @@ The system supports both **users and admins**, allowing customers to place and m
   <img src="screenshots/update-orders.png" width="80%" />
 </p>
 
-
-<p align="center">
-  <img src="screenshots/home.png" width="85%" style="border:1px solid #ccc" />
-</p>
-
-<p align="center">
-  <img src="screenshots/login.png" width="85%" style="border:1px solid #ccc" />
-</p>
-
-<p align="center">
-  <img src="screenshots/order.png" width="85%" style="border:1px solid #ccc" />
-</p>
-
-<p align="center">
-  <img src="screenshots/update-orders.png" width="85%" style="border:1px solid #ccc" />
-</p>
 ---
 
 ## ✨ Features
