@@ -9,11 +9,42 @@ The system supports both **users and admins**, allowing customers to place and m
 
 ## 🖥️ Screenshots
 
-![Home Page](screenshots/home.png)
-![Login Page](screenshots/login.png)
-![Order Page](screenshots/order.png)
-![Update Orders](screenshots/update.png)
+### Home Page
+<p align="center">
+  <img src="screenshots/home.png" width="80%" />
+</p>
 
+### Login Page
+<p align="center">
+  <img src="screenshots/login.png" width="80%" />
+</p>
+
+### Order Page
+<p align="center">
+  <img src="screenshots/order.png" width="80%" />
+</p>
+
+### Update Orders (Admin)
+<p align="center">
+  <img src="screenshots/update-orders.png" width="80%" />
+</p>
+
+
+<p align="center">
+  <img src="screenshots/home.png" width="85%" style="border:1px solid #ccc" />
+</p>
+
+<p align="center">
+  <img src="screenshots/login.png" width="85%" style="border:1px solid #ccc" />
+</p>
+
+<p align="center">
+  <img src="screenshots/order.png" width="85%" style="border:1px solid #ccc" />
+</p>
+
+<p align="center">
+  <img src="screenshots/update-orders.png" width="85%" style="border:1px solid #ccc" />
+</p>
 ---
 
 ## ✨ Features
