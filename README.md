@@ -9,24 +9,16 @@ The system supports both **users and admins**, allowing customers to place and m
 ## 🖥️ Screenshots
 
 ### Home Page
-<p align="center">
-  <img src="screenshots/home.png" width="80%" />
-</p>
+<img src="screenshots/home.png" width="80%" />
 
 ### Login Page
-<p align="center">
-  <img src="screenshots/login.png" width="80%" />
-</p>
+<img src="screenshots/login.png" width="80%" />
 
 ### Order Page
-<p align="center">
-  <img src="screenshots/order.png" width="80%" />
-</p>
+<img src="screenshots/order.png" width="80%" />
 
 ### Update Orders (Admin)
-<p align="center">
-  <img src="screenshots/update-orders.png" width="80%" />
-</p>
+<img src="screenshots/update-orders.png" width="80%" />
 
 ---
 
