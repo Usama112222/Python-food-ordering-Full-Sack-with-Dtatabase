@@ -1,21 +1,31 @@
-# 🍽️ Flask Food Ordering System Full Stack With Database
+# 🍽️ Flask Food Ordering System – Full Stack Web Application
 
 ## 📌 Project Overview
-A full-stack **Food Ordering Web Application** built using **Flask**, featuring user authentication, role-based access control, and order management.
+This is a **Full-Stack Food Ordering Web Application** built with **Flask** and a relational database (PostgreSQL/MySQL).  
+It features:
 
-The system supports both **users and admins**, allowing customers to place and manage orders while admins can view, update, and delete all orders.
+- User authentication (Sign Up & Login)
+- Role-based access control (User & Admin)
+- Secure password hashing
+- Ordering system with Add, Update, Delete functionality
+- Admin dashboard to manage all orders
+- Responsive and clean UI
+
+Users can place and manage orders, while admins can view, update, and delete all orders.  
+The app demonstrates a complete **Flask + Database + Frontend** workflow.
 
 ---
+
 ## 🖥️ Screenshots
 
 ### Home Page
-<img src="screenshots/home.png" width="80%" />
+<img src="screenshots/home.PNG" width="80%" />
 
 ### Login Page
-<img src="screenshots/login.png" width="80%" />
+<img src="screenshots/login.PNG" width="80%" />
 
 ### Order Page
-<img src="screenshots/order.png" width="80%" />
+<img src="screenshots/order.PNG" width="80%" />
 
 ### Update Orders (Admin)
 <img src="screenshots/update-orders.png" width="80%" />
@@ -23,27 +33,39 @@ The system supports both **users and admins**, allowing customers to place and m
 ---
 
 ## ✨ Features
-- User authentication (Login / Signup)
-- Role-based access (User & Admin)
-- Place, update, and delete orders
-- Admin order management
-- Pagination for orders
-- Secure password hashing
-- Clean and responsive UI
+
+### User Features
+- Sign Up / Login functionality
+- Place orders from menu items
+- Update own orders
+- View personal order history
+
+### Admin Features
+- View all orders from users
+- Update or delete any order
+- See order summaries with pagination
+- Dashboard shows total items ordered
+
+### Security & Backend
+- Passwords hashed using **Werkzeug**
+- Role-based access control for users and admins
+- Flask-Login for session management
+- Database connection via PostgreSQL/MySQL
+- Full CRUD (Create, Read, Update, Delete) operations
 
 ---
 
 ## 🛠️ Tech Stack
-- **Backend:** Flask, Flask-Login
-- **Database:** PostgreSQL / MySQL (configurable)
-- **Frontend:** HTML, CSS, Jinja2
+- **Backend:** Python, Flask, Flask-Login
+- **Frontend:** HTML, CSS, Jinja2 templates
+- **Database:** PostgreSQL / MySQL
 - **Security:** Werkzeug password hashing
 
 ---
 
-## 🚀 Run Locally
+## 🚀 How to Run Locally
 
 ### 1️⃣ Clone the repository
 ```bash
-git clone https://github.com/yourusername/flask-food-ordering.git
-cd flask-food-ordering
+git clone https://github.com/yourusername/Python-food-ordering-Full-Sack-with-Dtatabase.git
+cd Python-food-ordering-Full-Sack-with-Dtatabase
