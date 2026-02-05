@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Orders</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+  body {
+    font-family: 'DM Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url("{{ url_for('static', filename='images/hero-slider-1.jpg') }}") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    padding-top: 120px;
+  }
+
+  .navbar {
+    height: 120px; 
+    padding: 1.5rem 3rem;
+    font-size: 1.2rem;
+    z-index: 1000;
+  }
+
+  .navbar .btn {
+    font-size: 1.2rem;
+    padding: 14px 30px;
+    margin-left: 15px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  .orders-box {
+    background-color: rgba(0,0,0,0.75);
+    color: white;
+    padding: 40px;
+    border-radius: 20px;
+    max-width: 1200px;
+    margin: 50px auto;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    overflow-x: auto;
+  }
+
+  .orders-box h2 {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  table {
+    color: white;
+    text-align: center;
+  }
+
+  th, td {
+    vertical-align: middle !important;
+  }
+
+  th, td {
+    text-align: center;
+  }
+
+  .btn-sm {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+  }
+
+  .pagination .page-item.disabled .page-link {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .pagination .page-item.active .page-link {
+    background-color: #4caf50;
+    border-color: #4caf50;
+  }
+
+  @media (max-width: 768px) {
+    .navbar {
+      height: auto;
+      padding: 1rem 1rem;
+      font-size: 1rem;
+    }
+    .navbar .btn {
+      font-size: 1rem;
+      padding: 10px 20px;
+      margin-left: 10px;
+    }
+    .orders-box {
+      padding: 20px;
+    }
+    .orders-box h2 {
+      font-size: 2.2rem;
+    }
+    table {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* Chart containers */
+  .chart-container {
+    background-color: rgba(0,0,0,0.75);
+    padding: 30px;
+    margin: 30px auto;
+    border-radius: 20px;
+    max-width: 1000px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    color: white;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark bg-dark shadow fixed-top d-flex justify-content-between align-items-center w-100">
+  <a class="navbar-brand fw-bold fs-3" href="/">ALL ORDERS</a>
+  <div class="d-flex">
+    <a href="{{ url_for('home') }}" class="btn btn-secondary btn-lg">Back</a>
+  </div>
+</nav>
+
+<!-- ORDERS TABLE -->
+<div class="container orders-box">
+  <h2>All Orders</h2>
+
+  {% if orders %}
+    <table class="table table-striped table-dark">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Username</th>
+          <th>Burger</th>
+          <th>Pizza</th>
+          <th>Pasta</th>
+          <th>Fries</th>
+          <th>Total</th>
+          {% if current_user.role == 'admin' %}
+          <th>Actions</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+          <tr>
+            <td>{{ order['order_id'] }}</td>
+            <td>{{ order['username'] }}</td>
+            <td>{{ order['items'] | selectattr('name', 'equalto', 'burger') | map(attribute='quantity') | sum }}</td>
+            <td>{{ order['items'] | selectattr('name', 'equalto', 'pizza') | map(attribute='quantity') | sum }}</td>
+            <td>{{ order['items'] | selectattr('name', 'equalto', 'pasta') | map(attribute='quantity') | sum }}</td>
+            <td>{{ order['items'] | selectattr('name', 'equalto', 'fries') | map(attribute='quantity') | sum }}</td>
+            <td>₹{{ order['total'] }}</td>
+            {% if current_user.role == 'admin' %}
+            <td>
+              <div class="d-flex gap-2 justify-content-center">
+                <form action="{{ url_for('delete_order', order_id=order['order_id']) }}" method="POST">
+                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+                <a href="{{ url_for('update_order_page', order_id=order['order_id']) }}" class="btn btn-warning btn-sm">Update</a>
+              </div>
+            </td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- PAGINATION -->
+    <nav aria-label="Orders Pagination" class="mt-4">
+      <ul class="pagination justify-content-center">
+        <li class="page-item {% if page <= 1 %}disabled{% endif %}">
+          <a class="page-link" href="{{ url_for('orders', page=page-1) }}">Previous</a>
+        </li>
+        {% for p in range(1, total_pages + 1) %}
+          <li class="page-item {% if p == page %}active{% endif %}">
+            <a class="page-link" href="{{ url_for('orders', page=p) }}">{{ p }}</a>
+          </li>
+        {% endfor %}
+        <li class="page-item {% if page >= total_pages %}disabled{% endif %}">
+          <a class="page-link" href="{{ url_for('orders', page=page+1) }}">Next</a>
+        </li>
+      </ul>
+    </nav>
+
+  {% else %}
+    <div class="alert alert-info text-center">No orders found.</div>
+  {% endif %}
+</div>
+
+<!-- BAR CHART -->
+<div class="container chart-container">
+  <h3 class="text-center mb-4">Total Orders per Item (Bar Chart)</h3>
+  <canvas id="barChart"></canvas>
+</div>
+
+<!-- PIE CHART -->
+<div class="container chart-container">
+  <h3 class="text-center mb-4">Order Distribution (Pie Chart)</h3>
+  <canvas id="pieChart"></canvas>
+</div>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const itemLabels = {{ item_totals.keys() | list | safe }};
+  const itemData = {{ item_totals.values() | list | safe }};
+
+  // Bar Chart
+  const barCtx = document.getElementById('barChart').getContext('2d');
+  new Chart(barCtx, {
+      type: 'bar',
+      data: {
+          labels: itemLabels,
+          datasets: [{
+              label: 'Quantity Ordered',
+              data: itemData,
+              backgroundColor: 'rgba(54, 162, 235, 0.6)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1
+          }]
+      },
+      options: {
+          responsive: true,
+          plugins: {
+              legend: { display: false },
+              title: { display: true, text: 'Total Orders per Item' }
+          },
+          scales: { y: { beginAtZero: true } }
+      }
+  });
+
+  // Pie Chart
+  const pieCtx = document.getElementById('pieChart').getContext('2d');
+  new Chart(pieCtx, {
+      type: 'pie',
+      data: {
+          labels: itemLabels,
+          datasets: [{
+              data: itemData,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.6)',
+                  'rgba(54, 162, 235, 0.6)',
+                  'rgba(255, 206, 86, 0.6)',
+                  'rgba(75, 192, 192, 0.6)',
+                  'rgba(153, 102, 255, 0.6)',
+                  'rgba(255, 159, 64, 0.6)'
+              ]
+          }]
+      },
+      options: {
+          responsive: true,
+          plugins: { legend: { position: 'bottom' }, title: { display: true, text: 'Order Distribution' } }
+      }
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

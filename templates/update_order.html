@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Order #{{ order_id if order_id else '' }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('{{ url_for("static", filename="images/hero-slider-2.jpg") }}');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .container {
+      background: rgba(0,0,0,0.85);
+      padding: 50px;
+      border-radius: 20px;
+      max-width: 700px;
+      margin: 50px auto;
+    }
+    label {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    input {
+      font-size: 1.1rem;
+      padding: 12px;
+      color: white;
+      background: #222;
+      border: 1px solid #555;
+    }
+    .btn-lg {
+      font-size: 20px;
+      padding: 12px 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Search Bar -->
+    <form method="GET" action="{{ url_for('search_order') }}" class="mb-4">
+      <div class="input-group">
+        <input 
+          type="text" 
+          name="order_id" 
+          class="form-control" 
+          placeholder="Enter Order ID to search" 
+          required
+        >
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </form>
+
+    {% if order_id %}
+    <h2 class="text-center mb-4">Update Order #{{ order_id }}</h2>
+
+    <form method="POST" class="row g-3">
+      {% for item_name, item_price in menu_items.items() %}
+      <div class="col-md-6">
+        <label>{{ item_name.title() }} (₹{{ item_price }})</label>
+        <input 
+          type="number" 
+          name="{{ item_name }}" 
+          min="0" 
+          value="{{ order_items[item_name]['quantity'] if item_name in order_items else 0 }}" 
+          class="form-control"
+        >
+      </div>
+      {% endfor %}
+
+      <div class="col-12 text-center mt-4">
+        <button type="submit" class="btn btn-warning btn-lg">Update Order</button>
+        <a href="{{ url_for('home') }}" class="btn btn-secondary btn-lg ms-3">Cancel</a>
+      </div>
+    </form>
+    {% endif %}
+
+  </div>
+</body>
+</html>
+

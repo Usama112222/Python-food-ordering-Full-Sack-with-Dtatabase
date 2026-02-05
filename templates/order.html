@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Order</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'DM Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url("{{ url_for('static', filename='images/hero-slider-1.jpg') }}") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      height: 120px; 
+      padding: 1.5rem 3rem;
+      font-size: 1.2rem;
+      z-index: 1000; /* ensure it’s on top */
+    }
+
+    .navbar .btn {
+      font-size: 1.2rem;
+      padding: 14px 30px;
+      margin-left: 15px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    /* Push content below navbar */
+    body {
+      padding-top: 120px;
+    }
+
+    /* ORDER BOX */
+    .order-box {
+      background-color: rgba(0,0,0,0.75);
+      color: white;
+      padding: 60px;
+      border-radius: 20px;
+      max-width: 1000px;
+      margin: 50px auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .order-box h2 {
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .order-box label {
+      font-size: 1.5rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .order-box input {
+      font-size: 1.3rem;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background-color: #333;
+      color: white;
+    }
+
+    .order-buttons .btn {
+      font-size: 1.3rem;
+      padding: 14px 40px;
+      margin: 5px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        height: auto;
+        padding: 1rem 1rem;
+        font-size: 1rem;
+      }
+      .navbar .btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+        margin-left: 10px;
+      }
+      .order-box {
+        padding: 30px 20px;
+      }
+      .order-box h2 {
+        font-size: 2.2rem;
+      }
+      .order-box label {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark bg-dark shadow fixed-top d-flex justify-content-between align-items-center w-100">
+  <a class="navbar-brand fw-bold fs-3" href="/">BOOK YOUR ORDER</a>
+  <div class="d-flex">
+    <a href="{{ url_for('orders') }}" class="btn btn-success btn-lg">See All Orders</a>
+    <a href="{{ url_for('home') }}" class="btn btn-secondary btn-lg">Back</a>
+  </div>
+</nav>
+
+<!-- ORDER FORM -->
+<div class="container order-box">
+  <h2>Book Your Order</h2>
+
+  {% if message %}
+    <div class="alert alert-success text-center">{{ message }}</div>
+  {% endif %}
+
+  <form method="POST" class="row g-4">
+    {% for item, price in menu_items.items() %}
+    <div class="col-md-6">
+      <label>{{ item.title() }} (₹{{ price }})</label>
+      <input type="number" name="{{ item }}" min="0" value="0" class="form-control">
+    </div>
+    {% endfor %}
+
+    <div class="text-center mt-5 order-buttons">
+      <button type="submit" class="btn btn-primary">Place Order</button>
+    </div>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
